@@ -13,7 +13,7 @@ fn solve(path: &str) {
     println!("{total}")
 }
 
-fn convert_to_score(c: char) -> u32 {
+pub fn convert_to_score(c: char) -> u32 {
     if c.is_ascii_lowercase() {
         return c as u32 - 96;
     }

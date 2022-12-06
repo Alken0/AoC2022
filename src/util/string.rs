@@ -14,6 +14,14 @@ pub fn intersecting_unique_chars(one: &str, two: &str) -> Vec<char> {
     return intersection;
 }
 
+pub fn intersection_char(ground: &str, search: &Vec<&str>) -> char {
+    let search_includes_char = |c: &char| search.iter().all(|l| l.contains(*c));
+    return ground
+        .chars()
+        .find(search_includes_char)
+        .expect("chars do not match");
+}
+
 fn dedup<T: Eq + Hash + Copy>(v: &mut Vec<T>) {
     // note the Copy constraint
     let mut uniques = HashSet::new();
@@ -39,6 +47,24 @@ mod test {
         assert_eq!(
             intersecting_unique_chars("jqHRNqRjqzjGDLGL", "rsFMfFZSrLrFZsSL"),
             vec!['L']
+        );
+    }
+
+    #[test]
+    fn test_intersection_char_multiple_chars() {
+        assert_eq!(
+            intersection_char(
+                "vJrwpWtwJgWrhcsFMMfFFhFp",
+                &vec!["jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL", "PmmdzqPrVvPwwTWBwg"]
+            ),
+            'r'
+        );
+        assert_eq!(
+            intersection_char(
+                "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
+                &vec!["ttgJtRGJQctTZtZT", "CrZsJsPPZsGzwwsLwLmpwMDw"]
+            ),
+            'Z'
         );
     }
 }
